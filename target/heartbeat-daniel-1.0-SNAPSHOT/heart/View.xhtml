@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewHeartTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewHeartLabel_id}"/>
+                    <h:outputText value="#{heartController.selected.id}" title="#{bundle.ViewHeartTitle_id}"/>
+                    <h:outputText value="#{bundle.ViewHeartLabel_size}"/>
+                    <h:outputText value="#{heartController.selected.size}" title="#{bundle.ViewHeartTitle_size}"/>
+                    <h:outputText value="#{bundle.ViewHeartLabel_x}"/>
+                    <h:outputText value="#{heartController.selected.x}" title="#{bundle.ViewHeartTitle_x}"/>
+                    <h:outputText value="#{bundle.ViewHeartLabel_y}"/>
+                    <h:outputText value="#{heartController.selected.y}" title="#{bundle.ViewHeartTitle_y}"/>
+                    <h:outputText value="#{bundle.ViewHeartLabel_contractedSize}"/>
+                    <h:outputText value="#{heartController.selected.contractedSize}" title="#{bundle.ViewHeartTitle_contractedSize}"/>
+                    <h:outputText value="#{bundle.ViewHeartLabel_beatCount}"/>
+                    <h:outputText value="#{heartController.selected.beatCount}" title="#{bundle.ViewHeartTitle_beatCount}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{heartController.destroyAndView}" value="#{bundle.ViewHeartDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewHeartEditLink}"/>
+                <br />
+                <h:commandLink action="#{heartController.prepareCreate}" value="#{bundle.ViewHeartCreateLink}" />
+                <br />
+                <h:commandLink action="#{heartController.prepareList}" value="#{bundle.ViewHeartShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewHeartIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
