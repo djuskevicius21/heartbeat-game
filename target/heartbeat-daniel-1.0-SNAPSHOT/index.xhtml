@@ -1,16 +1,32 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+<html lang="#{heartController.language}"
+           xmlns="http://www.w3.org/1999/xhtml"
+           xmlns:h="http://xmlns.jcp.org/jsf/html"
+           xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:view locale="#{heartController.locale}">
     <h:head>
-        <title>Facelet Title</title>
+        <!--<title>Facelet Title</title>-->
+        <title><h:outputText value="#{bundle.FaceletTitle}"/></title>
         <h:outputStylesheet name="css/jsfcrud.css"/>
     </h:head>
     <h:body>
-        Hello from Facelets
+        <h:outputText value="#{bundle.HelloFromFacelets}"/>
         <br />
-        <h:link outcome="/heart/List" value="Show All Heart Items"/>
+        <br />
+        <h:outputText value="#{bundle.Language}"/>
+        <h:form>
+            <h:selectOneMenu value="#{heartController.language}" onchange="submit()">
+                <f:selectItem itemValue="en" itemLabel="English" />
+                <f:selectItem itemValue="zh" itemLabel="中文" />
+                <f:selectItem itemValue="fr" itemLabel="Français" />
+            </h:selectOneMenu>
+        </h:form>
+        <br/>
+        <br/>
+        <h:link outcome="/heart/List" value="#{bundle.IndexShowAllLink}"/>
     </h:body>
+    </f:view>
 
 </html>
 
