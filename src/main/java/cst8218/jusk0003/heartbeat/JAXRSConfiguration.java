@@ -11,7 +11,7 @@ import javax.ws.rs.core.Application;
  * Configures JAX-RS for the application.
  * @author Juneau
  */
-/*@DatabaseIdentityStoreDefinition(
+@DatabaseIdentityStoreDefinition(
    dataSourceLookup = "${'java:comp/DefaultDataSource'}",
    callerQuery = "#{'select password from app.appuser where username = ?'}",
    groupsQuery = "select groupname from app.appuser where username = ?",
@@ -20,7 +20,6 @@ import javax.ws.rs.core.Application;
 )
 @ApplicationScoped
 @Named
-*/
 @ApplicationPath("resources")
 public class JAXRSConfiguration extends Application {
     
