@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListHeartTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListHeartEmpty}" rendered="#{heartController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{heartController.items.rowCount > 0}">
+                    <h:outputText value="#{heartController.pagination.pageFirstItem + 1}..#{heartController.pagination.pageLastItem + 1}/#{heartController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{heartController.previous}" value="#{bundle.Previous} #{heartController.pagination.pageSize}" rendered="#{heartController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{heartController.next}" value="#{bundle.Next} #{heartController.pagination.pageSize}" rendered="#{heartController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{heartController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListHeartTitle_id}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListHeartTitle_size}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.size}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListHeartTitle_x}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.x}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListHeartTitle_y}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.y}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListHeartTitle_contractedSize}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.contractedSize}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListHeartTitle_beatCount}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.beatCount}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{heartController.prepareView}" value="#{bundle.ListHeartViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{heartController.prepareEdit}" value="#{bundle.ListHeartEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{heartController.destroy}" value="#{bundle.ListHeartDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{heartController.prepareCreate}" value="#{bundle.ListHeartCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListHeartIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
