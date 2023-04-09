@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta http-equiv="X-UA-Compatible" content="ie=edge">
+            <title>Play with React</title>
+            <script type="application/javascript" src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
+            <script type="application/javascript" src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
+            <script type="application/javascript" src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+    </head>
+    
+    <body style = background-color:#2b2b2b >
+            <div id="root"></div>
+            <script type="text/babel">                   
+                  // Obtain the root 
+                  const rootElement = document.getElementById('root');
+
+                  // Create a ES6 class component    
+                  class HeartList extends React.Component {
+
+                          // Use the render function to return JSX component      
+                          constructor(props) {
+                              super(props);
+                              this.handleChange = this.handleChange.bind(this);
+                              this.handleSubmit = this.handleSubmit.bind(this);
+                              this.state = { count: "", heartsstring: "", hearts: [], delay: 300 };
+                          }//end constructor(props)
+
+                          callAPI() {
+                              fetch("http://localhost:8080/heartbeat-game/resources/cst8218.jusk0003.heartbeat.heart",{
+                                headers: {'Accept': 'application/json'}})
+                                .then(res => res.json())
+                                .then(resjson => this.setState({hearts: resjson}));
+                          }//end callAPI()
+
+
+                          componentDidMount() {
+                              this.callAPI();
+                              this.interval = setInterval(this.tick, this.state.delay);
+                          }//end componentDidMount()
+
+
+                         componentWillUnmount() {
+                              clearInterval(this.interval);
+                         }
+
+                         tick = () => {this.callAPI();};    //keep refreshing
+                         // stopTick = () => {};    //don't refresh
+                        
+                        
+                        
+                         componentDidUpdate(prevProps, prevState) {
+                                if (prevState.delay !== this.state.delay) {
+                                    clearInterval(this.interval);
+                                    this.interval = setInterval(this.tick, this.state.delay);
+                                }
+                                
+                                const ctx = this.refs.canvas.getContext("2d");
+                                ctx.clearRect(0, 0, this.refs.canvas.width, this.refs.canvas.height);
+                                
+                                this.state.hearts.forEach(item =>
+                                {
+                                    //Draw Square
+                                        // ctx.fillStyle = "#FF0000";
+                                        // ctx.fillRect(item.x, item.y, item.size, item.size);
+                                    
+                                    // reference: https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Drawing_shapes
+                                    // Begin path
+                                    ctx.beginPath();
+                                    
+                                    // Move the start point to (x, y)
+                                    ctx.moveTo(item.x, item.y);
+                                    // bezierCurveTo(cp1x, cp1y,   cp2x, cp2y,   x, y)
+                                    // (x, y) of Control Point1 & 2, and End point (like adobe PS or AI's pen path)
+                                    ctx.bezierCurveTo(item.x - item.size/2.2, item.y - item.size/4,    item.x - item.size/1.6, item.y + item.size/4.8,   item.x, item.y + item.size/1.5);
+                                    
+                                    // Move the start point back to (x, y)
+                                    ctx.moveTo(item.x, item.y);
+                                    // Curve invert by the y-axis: (x, y) to (-x, y)
+                                    ctx.bezierCurveTo(item.x + item.size/2.2, item.y - item.size/4,    item.x + item.size/1.6, item.y + item.size/4.8,   item.x, item.y + item.size/1.5);
+                                    
+                                    // Even number of ID => red heart
+                                    if(item.id%2 === 0){
+                                        // red
+                                        ctx.fillStyle = "#FF0000";
+                                    }
+                                     // Odd number of ID => yellow heart
+                                    else{
+                                        // yellow
+                                        ctx.fillStyle = "#FFF100";
+                                    }
+                                    ctx.fill();
+                                });
+                         }//end  componentDidUpdate(prevProps, prevState)
+
+                          render() { 
+                              //Some .css...
+                              const th = {
+                                    color:"#c47fff", 
+                                    fontSize: "20px",
+                                    borderTopStyle:"solid",
+                                    borderBottomStyle:"solid",
+                                    borderLeftStyle:"solid",
+                                    borderRightStyle:"solid",
+                                    borderTopWidth: "1px",
+                                    borderBottomWidth: "1px",
+                                    borderLeftWidth: "1px",
+                                    borderRightWidth: "1px",
+                                    borderTopColor: "#748a8b",
+                                    borderBottomColor: "#748a8b",
+                                    borderLeftColor: "#374548",
+                                    borderRightColor: "#374548"
+                              };
+                              const td = {
+                                    borderTopStyle: "solid",
+                                    borderBottomStyle: "solid",
+                                    borderLeftStyle: "solid",
+                                    borderRightStyle: "solid",
+                                    borderTopWidth: "1px",
+                                    borderBottomWidth: "1px",
+                                    borderLeftWidth: "1px",
+                                    borderRightWidth: "1px",
+                                    borderTopColor: "#748a8b",
+                                    borderBottomColor: "#748a8b",
+                                    borderLeftColor: "#748a8b",
+                                    borderRightColor: "#748a8b",
+                                    verticalAlign: "baseline",
+                                    paddingBottom: "0px"
+                              };
+                              const input = {
+                                  color: "#ffffff",
+                                  backgroundColor: "#383838"
+                              };
+                              //hearts array
+                              const valuesArray = this.state.hearts;
+
+                              //comment are NOT allowed in the return() method
+                              return (
+                                        <div style={{backgroundColor:"#2b2b2b", color:"#ffffff"}}>
+                                        <h1 style={{color:"#66ccff"}}>Heart List {this.props.name}</h1>
+                                         <ul>
+                                                  <li>count: {this.state.count} </li>
+                                                  <li>array size: {valuesArray.length} </li>
+                                                  {valuesArray.map((item,key)=>{
+                                                      return <li key={key}> x: {item.x};   y: {item.y};   size: {item.size};   contractedSize: {item.contractedSize};   beatCount: {item.beatCount} </li>;
+                                                  })}
+                                         </ul>
+                                        <br>
+                                        </br>
+                                        <br>
+                                        </br>
+                                        <form onSubmit={this.handleSubmit}>
+                                              <table>
+                                                      <tr>
+                                                              <th style={th}>X</th>
+                                                              <th style={th}>Y</th>
+                                                              <th style={th}>Size</th>
+                                                              <th style={th}>ContractedSize</th>
+                                                              <th style={th}>BeatCount</th>
+                                                     </tr>
+                                                      {this.state.hearts.map((item,key)=>{
+                                                          return (
+                                                              <tr>
+                                                                  <td style={td}><input type="text" name={item.id} value={item.x} onChange={(e)=>this.handleChange(e,"x",key)}      style={input} /> </td>
+                                                                  <td style={td}><input type="text" name={item.id} value={item.y} onChange={(e)=>this.handleChange(e,"y",key)}      style={input} /> </td>
+                                                                  <td style={td}><input type="text" name={item.id} value={item.size} onChange={(e)=>this.handleChange(e,"size",key)}      style={input} /> </td>
+                                                                  <td style={td}><input type="text" name={item.id} value={item.contractedSize} onChange={(e)=>this.handleChange(e,"contractedSize",key)}      style={input} /> </td>
+                                                                  <td style={td}><input type="text" name={item.id} value={item.beatCount} onChange={(e)=>this.handleChange(e,"beatCount",key)}      style={input} /> </td>
+                                                              </tr>
+                                                          );
+                                                      })}
+                                              </table>
+                                              <br>
+                                              </br>
+                                              <input type="submit" value="Submit"/>
+                                        </form>
+                                        <canvas
+                                            ref="canvas"
+                                            width={1000}
+                                            height={1000}
+                                         />
+                                        </div>
+                              );
+                          }//end render()
+
+                          handleChange(event,field,index) {
+                                var hearts = this.state.hearts.map((item,key)=>{
+                                  if (key === index) {  // this one changed                        
+                                     return Object.assign({},item,{[field]: event.target.value}); // make a copy of the item to change    
+                                  } else {
+                                     return item;  // this one didn't change
+                                  }
+                                });
+
+                                this.setState({hearts: hearts});
+                          }//end handleChange(event,field,index)
+
+                          handleSubmit(event) {
+                                this.state.hearts.map(item=>{                
+                                    fetch("http://localhost:8080/heartbeat-game/resources/cst8218.jusk0003.heartbeat.heart/"+item.id,{
+                                         method: 'PUT',
+                                         body: JSON.stringify(item),
+                                         headers: {'Content-type': 'application/json'}})
+                                         .then(res => res.text());
+                                });
+                                event.preventDefault();
+                          }//end handleSubmit(event)
+                          
+                  }//end of class HeartList
+                  
+                  
+                  // Create a function to wrap up your component
+                  function App(){
+                      return(
+                        <div>
+                          <HeartList name="Using React!"/>
+                        </div>
+                      );
+                  }
+
+                  // Use the ReactDOM.render to show your component on the browser
+                  ReactDOM.render(
+                            <App />,
+                            rootElement
+                  );
+          
+          </script>
+          
+    </body>
+
+                        
+</html>
+
+

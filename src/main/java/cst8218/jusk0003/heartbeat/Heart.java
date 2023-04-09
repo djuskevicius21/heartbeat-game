@@ -29,10 +29,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Heart implements Serializable {
     
-    /**
-     * GIT TEST HERE
-     * 1111111111111
-     */
     
     static final int INITIAL_SIZE = 25;
     static final int CHANGE_RATE = 1;
