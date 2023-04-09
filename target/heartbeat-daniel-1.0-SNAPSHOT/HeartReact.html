@@ -47,7 +47,7 @@
                          }
 
                          tick = () => {this.callAPI();};    //keep refreshing
-                         //            tick = () => {};    //don't refresh
+                         // stopTick = () => {};    //don't refresh
                         
                         
                         
@@ -63,17 +63,34 @@
                                 this.state.hearts.forEach(item =>
                                 {
                                     //Draw Square
-                                    // ctx.fillStyle = "#FF0000";
-                                    // ctx.fillRect(item.x, item.y, item.size, item.size);
+                                        // ctx.fillStyle = "#FF0000";
+                                        // ctx.fillRect(item.x, item.y, item.size, item.size);
                                     
-                                    ctx.beginPath();
-                                    ctx.moveTo(item.x, item.y);
                                     // reference: https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Drawing_shapes
-                                    // bezierCurveTo(cp1x, cp1y,   cp2x, cp2y,   x, y)  (The drawing board is in the 4th quadrant)
-                                    ctx.bezierCurveTo(item.x - item.size/2.2, item.y - item.size/4,    item.x - item.size/1.6, item.y + item.size/4.8,   item.x, item.y + item.size/1.5);
+                                    // Begin path
+                                    ctx.beginPath();
+                                    
+                                    // Move the start point to (x, y)
                                     ctx.moveTo(item.x, item.y);
+                                    // bezierCurveTo(cp1x, cp1y,   cp2x, cp2y,   x, y)
+                                    // (x, y) of Control Point1 & 2, and End point (like adobe PS or AI's pen path)
+                                    ctx.bezierCurveTo(item.x - item.size/2.2, item.y - item.size/4,    item.x - item.size/1.6, item.y + item.size/4.8,   item.x, item.y + item.size/1.5);
+                                    
+                                    // Move the start point back to (x, y)
+                                    ctx.moveTo(item.x, item.y);
+                                    // Curve invert by the y-axis: (x, y) to (-x, y)
                                     ctx.bezierCurveTo(item.x + item.size/2.2, item.y - item.size/4,    item.x + item.size/1.6, item.y + item.size/4.8,   item.x, item.y + item.size/1.5);
-                                    ctx.fillStyle = "#FF0000";
+                                    
+                                    // Even number of ID => red heart
+                                    if(item.id%2 === 0){
+                                        // red
+                                        ctx.fillStyle = "#FF0000";
+                                    }
+                                     // Odd number of ID => yellow heart
+                                    else{
+                                        // yellow
+                                        ctx.fillStyle = "#FFF100";
+                                    }
                                     ctx.fill();
                                 });
                          }//end  componentDidUpdate(prevProps, prevState)
@@ -124,7 +141,7 @@
                                         <div style={{backgroundColor:"#2b2b2b", color:"#ffffff"}}>
                                         <h1 style={{color:"#66ccff"}}>Heart List {this.props.name}</h1>
                                          <ul>
-                                                  <li>count: style = {this.state.count} </li>
+                                                  <li>count: {this.state.count} </li>
                                                   <li>array size: {valuesArray.length} </li>
                                                   {valuesArray.map((item,key)=>{
                                                       return <li key={key}> x: {item.x};   y: {item.y};   size: {item.size};   contractedSize: {item.contractedSize};   beatCount: {item.beatCount} </li>;
@@ -157,8 +174,6 @@
                                               </table>
                                               <br>
                                               </br>
-                                              <br>
-                                              </br>
                                               <input type="submit" value="Submit"/>
                                         </form>
                                         <canvas
@@ -172,7 +187,7 @@
 
                           handleChange(event,field,index) {
                                 var hearts = this.state.hearts.map((item,key)=>{
-                                  if (key === index) {  // this one changed
+                                  if (key === index) {  // this one changed                        
                                      return Object.assign({},item,{[field]: event.target.value}); // make a copy of the item to change    
                                   } else {
                                      return item;  // this one didn't change
@@ -192,7 +207,7 @@
                                 });
                                 event.preventDefault();
                           }//end handleSubmit(event)
-
+                          
                   }//end of class HeartList
                   
                   
