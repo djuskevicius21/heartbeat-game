@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateAppUserTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateAppUserLabel_userName}" for="userName" />
+                    <h:inputText id="userName" value="#{appUserController.selected.userName}" title="#{bundle.CreateAppUserTitle_userName}" />
+                    <h:outputLabel value="#{bundle.CreateAppUserLabel_password}" for="passWord" />
+                    <h:inputText id="passWord" value="#{appUserController.selected.password}" title="#{bundle.CreateAppUserTitle_password}" />
+                    <h:outputLabel value="#{bundle.CreateAppUserLabel_groupName}" for="groupName" />
+                    <h:inputText id="groupName" value="#{appUserController.selected.groupName}" title="#{bundle.CreateAppUserTitle_groupName}" />
+                    <h:outputLabel value="#{bundle.CreateAppUserLabel_firstName}" for="firstName" />
+                    <h:inputText id="firstName" value="#{appUserController.selected.firstName}" title="#{bundle.CreateAppUserTitle_firstName}" />
+                    <h:outputLabel value="#{bundle.CreateAppUserLabel_lastName}" for="lastName" />
+                    <h:inputText id="lastName" value="#{appUserController.selected.lastName}" title="#{bundle.CreateAppUserTitle_lastName}" />
+                    <h:outputLabel value="#{bundle.CreateAppUserLabel_birthday}" for="birthday" />
+                    <h:inputText id="birthday" value="#{appUserController.selected.birthday}" title="#{bundle.CreateAppUserTitle_birthday}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{appUserController.create}" value="#{bundle.CreateAppUserSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{appUserController.prepareList}" value="#{bundle.CreateAppUserShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateAppUserIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
