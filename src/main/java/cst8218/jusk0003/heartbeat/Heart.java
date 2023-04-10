@@ -30,17 +30,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Heart implements Serializable {
     
     
-    static final int INITIAL_SIZE = 25;
-    static final int CHANGE_RATE = 1;
-    static final int CONTRACTION_DECREMENT = 1;
-    static final int BEAT_INCREMENT = 5;
-    static final int SHRINK_DECREMENT = 5;
-    static final int BEATS_TO_EXHAUSTION = 100;
-    static final int STOP_SIZE = 5;
-    static final int SIZE_MAX = 500;
-    static final int X_MAX = 500;
-    static final int Y_MAX = 500;
-    static final int CONTRACTED_MAX = 100;
+    public static final int INITIAL_SIZE = 25;
+    public static final int CHANGE_RATE = 1;
+    public static final int CONTRACTION_DECREMENT = 1;
+    public static final int BEAT_INCREMENT = 5;
+    public static final int SHRINK_DECREMENT = 5;
+    public static final int BEATS_TO_EXHAUSTION = 100;
+    public static final int STOP_SIZE = 5;
+    public static final int SIZE_MAX = 500;
+    public static final int X_MAX = 500;
+    public static final int Y_MAX = 500;
+    public static final int CONTRACTED_MAX = 100;
     
     private static final long serialVersionUID = 1L;
     @Id
@@ -216,7 +216,7 @@ public class Heart implements Serializable {
      * Returns true if the Heart has not yet stopped and is still beating.
      * @return True if the Heart has not yet stopped and is still beating; otherwise False.
      */
-    private boolean stillBeating() {
+    public boolean stillBeating() {
         return getContractedSize() > STOP_SIZE; 
     }
     
@@ -224,14 +224,14 @@ public class Heart implements Serializable {
      * Returns true if the size of the heart is less than or equal to the contractedSize of that Heart.
      * @return true or false.
      */
-    private boolean finishedCurrentBeat() {
+    public boolean finishedCurrentBeat() {
         return getSize() <= getContractedSize();
     }
     
     /**
      * Increases the size of a Heart by BEAT_INCREMENT.
      */
-    private void newBeat() {
+    public void newBeat() {
         setSize(getSize() + BEAT_INCREMENT);
     }
     
@@ -239,21 +239,21 @@ public class Heart implements Serializable {
      * Returns true if the beatCount of the Heart is greater than or equal to BEATS_TO_EXHAUSTION.
      * @return true or false.
      */
-    private boolean exhausted() {
+    public boolean exhausted() {
         return getBeatCount() >= BEATS_TO_EXHAUSTION;
     }
     
     /**
      * Shrinks a Heart by decreasing it's contractedSize by SHRINK_DECREMENT.
      */
-    private void shrink() {
+    public void shrink() {
         setContractedSize(getContractedSize() - SHRINK_DECREMENT);
     }
     
     /**
      * Causes a Heart to continue contracting by decreasing it's size by CONTRACTION_DECREMENT.
      */
-    private void continueContracting() {
+    public void continueContracting() {
         setSize(getSize() - CONTRACTION_DECREMENT);
     }
     
