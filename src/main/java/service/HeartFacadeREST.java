@@ -7,6 +7,8 @@ package service;
 
 import cst8218.jusk0003.heartbeat.Heart;
 import java.util.List;
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -29,6 +31,7 @@ import javax.ws.rs.core.Response;
  * 
  * @author Daniel Juskevicius
  */
+@DeclareRoles({"Admin", "ApiGroup"})
 @Stateless
 @Path("cst8218.jusk0003.heartbeat.heart")
 public class HeartFacadeREST extends AbstractFacade<Heart> {
@@ -51,6 +54,7 @@ public class HeartFacadeREST extends AbstractFacade<Heart> {
      * @return A response depending on the status of the POST request, either CREATED, OK, or BAD_REQUEST.
      */
     @POST
+    @RolesAllowed({"Admin", "ApiGroup"})
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response createHeart(Heart heart) {
         if (heart.getId() == null) { // must be a new heart
@@ -76,6 +80,7 @@ public class HeartFacadeREST extends AbstractFacade<Heart> {
      * @return A response depending on the status of the POST request, either OK or BAD_REQUEST.
      */
     @POST
+    @RolesAllowed({"Admin", "ApiGroup"})
     @Path("{id}")
     public Response update(@PathParam("id") Long id, Heart heart) {
         if (super.find(id) == null || !(id.equals(heart.getId()))) {
@@ -107,6 +112,7 @@ public class HeartFacadeREST extends AbstractFacade<Heart> {
      * @return A response depending on the status of the POST request, either BAD_REQUEST or OK.
      */
     @PUT
+    @RolesAllowed({"Admin", "ApiGroup"})
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response edit(@PathParam("id") Long id, Heart heart) {
@@ -123,6 +129,7 @@ public class HeartFacadeREST extends AbstractFacade<Heart> {
      * @param id The ID of the Heart object to be deleted.
      */
     @DELETE
+    @RolesAllowed({"Admin", "ApiGroup"})
     @Path("{id}")
     public void remove(@PathParam("id") Long id) {
         super.remove(super.find(id));
@@ -135,6 +142,7 @@ public class HeartFacadeREST extends AbstractFacade<Heart> {
      * @return The Heart object associated with that ID.
      */
     @GET
+    @RolesAllowed({"Admin", "ApiGroup"})
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Heart find(@PathParam("id") Long id) {
@@ -147,6 +155,7 @@ public class HeartFacadeREST extends AbstractFacade<Heart> {
      * @return A list of all the hearts in the database.
      */
     @GET
+    @RolesAllowed({"Admin", "ApiGroup"})
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Heart> findAll() {
@@ -161,6 +170,7 @@ public class HeartFacadeREST extends AbstractFacade<Heart> {
      * @return The list of the hearts inside that range from the database.
      */
     @GET
+    @RolesAllowed({"Admin", "ApiGroup"})
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Heart> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
@@ -174,6 +184,7 @@ public class HeartFacadeREST extends AbstractFacade<Heart> {
      * @return The number of hearts on the database.
      */
     @GET
+    @RolesAllowed({"Admin", "ApiGroup"})
     @Path("count")
     @Produces(MediaType.APPLICATION_JSON)
     public String countREST() {
