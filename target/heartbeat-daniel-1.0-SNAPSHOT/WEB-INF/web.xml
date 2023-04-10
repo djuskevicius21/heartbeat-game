@@ -33,4 +33,20 @@
             <role-name>Admin</role-name>
         </auth-constraint>
     </security-constraint>
+    
+    <security-constraint>
+        <display-name>JSF Heart Pages Login</display-name>
+        <web-resource-collection>
+            <web-resource-name>JSF Heart Pages</web-resource-name>
+            <description>Accessible to admin users and PagesGroup users only</description>
+            <url-pattern>/faces/heart/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>PagesGroup or Admin Role Required</description>
+            <role-name>Admin</role-name>
+            <role-name>PagesGroup</role-name>
+        </auth-constraint>
+    </security-constraint>
+    
+    
 </web-app>
