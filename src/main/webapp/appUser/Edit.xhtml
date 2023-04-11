@@ -21,14 +21,6 @@
                     <h:inputText id="passWord" value="#{appUserController.selected.password}" title="#{bundle.EditAppUserTitle_password}" />
                     <h:outputLabel value="#{bundle.EditAppUserLabel_groupName}" for="groupName" />
                     <h:inputText id="groupName" value="#{appUserController.selected.groupName}" title="#{bundle.EditAppUserTitle_groupName}" />
-                    <h:outputLabel value="#{bundle.EditAppUserLabel_firstName}" for="firstName" />
-                    <h:inputText id="firstName" value="#{appUserController.selected.firstName}" title="#{bundle.EditAppUserTitle_firstName}" />
-                    <h:outputLabel value="#{bundle.EditAppUserLabel_lastName}" for="lastName" />
-                    <h:inputText id="lastName" value="#{appUserController.selected.lastName}" title="#{bundle.EditAppUserTitle_lastName}" />
-                    <h:outputLabel value="#{bundle.EditAppUserLabel_birthday}" for="birthday" />
-                    <h:inputText id="birthday" value="#{appUserController.selected.birthday}" title="#{bundle.EditAppUserTitle_birthday}" >
-                        <f:convertDateTime pattern="MM/dd/yyyy" />
-                    </h:inputText>
                 </h:panelGrid>
                 <h:commandLink action="#{appUserController.update}" value="#{bundle.EditAppUserSaveLink}"/>
                 <br />
