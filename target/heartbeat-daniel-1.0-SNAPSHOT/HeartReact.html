@@ -19,7 +19,6 @@
 
                   // Create a ES6 class component    
                   class HeartList extends React.Component {
-
                           // Use the render function to return JSX component      
                           constructor(props) {
                               super(props);
@@ -29,10 +28,20 @@
                           }//end constructor(props)
 
                           callAPI() {
-                              fetch("http://localhost:8080/heartbeat-game/resources/cst8218.jusk0003.heartbeat.heart",{
-                                headers: {'Accept': 'application/json'}})
-                                .then(res => res.json())
-                                .then(resjson => this.setState({hearts: resjson}));
+
+                                fetch("http://localhost:8080/heartbeat-daniel/resources/cst8218.jusk0003.heartbeat.heart", {
+                                    method: 'GET',
+                                    headers: {
+                                        'Content-type': 'application/json',
+                                        'Authorization': 'Basic' + btoa('a' + ':' + 'a')
+                                        }
+                                    })
+                                    .then(res => res.json())
+                                    .then(resjson => this.setState({hearts: resjson}));
+//                              fetch("http://localhost:8080/heartbeat-game/resources/cst8218.jusk0003.heartbeat.heart",{
+//                                headers: {'Accept': 'application/json'}})
+//                                .then(res => res.json())
+//                                .then(resjson => this.setState({hearts: resjson}));
                           }//end callAPI()
 
 
