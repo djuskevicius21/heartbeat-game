@@ -12,18 +12,17 @@ import javax.ws.rs.core.Application;
  * Configures JAX-RS for the application.
  * @author Juneau
  */
-@ApplicationPath("resources")
 @BasicAuthenticationMechanismDefinition
 @DatabaseIdentityStoreDefinition(
    dataSourceLookup = "${'java:comp/DefaultDataSource'}",
-   //dataSourceLookup = "${'jdbc:derby://localhost:1527/sun-appserv-samples'}",
-   callerQuery = "#{'select password from app.appuser where userid = ?'}",
-   groupsQuery = "select groupname from app.appuser where userid = ?",
+   callerQuery = "#{'select password from appuser where username = ?'}",
+   groupsQuery = "select groupname from appuser where username = ?",
    hashAlgorithm = PasswordHash.class,
    priority = 10
 )
-@Named
 @ApplicationScoped
+@Named
+@ApplicationPath("resources")
 public class JAXRSConfiguration extends Application {
     
 }
