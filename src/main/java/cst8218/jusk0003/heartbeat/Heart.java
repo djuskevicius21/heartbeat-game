@@ -6,7 +6,6 @@
 package cst8218.jusk0003.heartbeat;
 
 import java.io.Serializable;
-import java.util.HashSet;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
