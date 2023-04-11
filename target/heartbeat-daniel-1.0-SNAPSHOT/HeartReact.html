@@ -37,7 +37,30 @@
                                 .then(resjson => this.setState({hearts: resjson}));
                           }//end callAPI()
 
+                          handleChange(event,field,index) {
+                                var hearts = this.state.hearts.map((item,key)=>{
+                                  if (key === index) {  // this one changed                        
+                                     return Object.assign({},item,{[field]: event.target.value}); // make a copy of the item to change    
+                                  } else {
+                                     return item;  // this one didn't change
+                                  }
+                                });
 
+                                this.setState({hearts: hearts});
+                          }//end handleChange(event,field,index)
+
+                          handleSubmit(event) {
+                                this.state.hearts.map(item=>{                
+                                    fetch("http://localhost:8080/heartbeat-game/resources/cst8218.jusk0003.heartbeat.heart/"+item.id,{
+                                         method: 'PUT',
+                                         body: JSON.stringify(item),
+                                         headers: {'Content-type': 'application/json',
+                                                           'Authorization':'Basic ' + btoa("a" + ":" + "a")}})
+                                         .then(res => res.text());
+                                });
+                                event.preventDefault();
+                          }//end handleSubmit(event)
+                          
                           componentDidMount() {
                               this.callAPI();
                               this.interval = setInterval(this.tick, this.state.delay);
@@ -187,29 +210,6 @@
                               );
                           }//end render()
 
-                          handleChange(event,field,index) {
-                                var hearts = this.state.hearts.map((item,key)=>{
-                                  if (key === index) {  // this one changed                        
-                                     return Object.assign({},item,{[field]: event.target.value}); // make a copy of the item to change    
-                                  } else {
-                                     return item;  // this one didn't change
-                                  }
-                                });
-
-                                this.setState({hearts: hearts});
-                          }//end handleChange(event,field,index)
-
-                          handleSubmit(event) {
-                                this.state.hearts.map(item=>{                
-                                    fetch("http://localhost:8080/heartbeat-game/resources/cst8218.jusk0003.heartbeat.heart/"+item.id,{
-                                         method: 'PUT',
-                                         body: JSON.stringify(item),
-                                         headers: {'Content-type': 'application/json',
-                                                           'Authorization':'Basic ' + btoa("a" + ":" + "a")}})
-                                         .then(res => res.text());
-                                });
-                                event.preventDefault();
-                          }//end handleSubmit(event)
                           
                   }//end of class HeartList
                   
